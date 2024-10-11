@@ -4,29 +4,36 @@ import axios from 'axios';
 const FileUpload = () => {
   const [file, setFile] = useState(null);
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
   // Handle file selection
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
-  // Handle text input change
+  // Handle text input change for name
   const handleNameChange = (e) => {
     setName(e.target.value);
+  };
+
+  // Handle text input change for email
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!file || !name) {
-      alert('Please provide both a file and a name.');
+    if (!file || !name || !email) {
+      alert('Please provide a file, name, and email.');
       return;
     }
 
     const formData = new FormData();
     formData.append('file', file);
     formData.append('name', name);
+    formData.append('email', email);
 
     try {
       const response = await axios.post('http://localhost:3001/api/v1/mediaUpload/localFileUpload', formData, {
@@ -54,6 +61,16 @@ const FileUpload = () => {
             value={name}
             onChange={handleNameChange}
             placeholder="Enter your name"
+            required
+          />
+        </div>
+        <div>
+          <label>Email: </label>
+          <input
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="Enter your email"
             required
           />
         </div>

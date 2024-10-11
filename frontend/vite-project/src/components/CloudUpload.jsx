@@ -1,8 +1,9 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 const ImageUpload = () => {
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [message, setMessage] = useState('');
 
@@ -14,15 +15,20 @@ const ImageUpload = () => {
     setName(e.target.value);
   };
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !imageFile) {
-      setMessage('Please provide both name and image');
+    if (!name || !email || !imageFile) {
+      setMessage('Please provide name, email, and image');
       return;
     }
 
     const formData = new FormData();
     formData.append('name', name);
+    formData.append('email', email);
     formData.append('imageFile', imageFile);
 
     try {
@@ -45,6 +51,10 @@ const ImageUpload = () => {
         <div>
           <label>Name: </label>
           <input type="text" value={name} onChange={handleNameChange} />
+        </div>
+        <div>
+          <label>Email: </label>
+          <input type="email" value={email} onChange={handleEmailChange} />
         </div>
         <div>
           <label>Image: </label>

@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+mongoose.set('debug', true)
 const app = express();
 const dotenv = require('dotenv')
 dotenv.config({});
